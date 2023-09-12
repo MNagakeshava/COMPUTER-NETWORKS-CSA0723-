@@ -1,0 +1,68 @@
+ def vigenere_encrypt(plain_text, key):
+    encrypted_text = ""
+    key = key.upper()  # Convert the key to uppercase for consistency
+    key_length = len(key)
+    key_indices = [ord(char) - ord('A') for char in key]
+
+    for i, char in enumerate(plain_text):
+        if char.isalpha():
+            shift = key_indices[i % key_length]
+            if char.islower():
+                encrypted_char = chr((ord(char) - ord('a') + shift) % 26 + ord('a'))
+            else:
+                encrypted_char = chr((ord(char) - ord('A') + shift) % 26 + ord('A'))
+            encrypted_text += encrypted_char
+        else:
+            encrypted_text += char
+
+    return encrypted_text
+
+# Example usage
+plaintext = input("Enter the text:")
+key = input("Enter the key:")
+encrypted_text = vigenere_encrypt(plaintext, key)
+print("Encrypted:", encrypted_text)
+
+
+def caesar_cipher(text, shift):
+    encrypted = ''.join(chr(((ord(char) - 65 + shift) % 26 )+ 65) if char.isalpha() else char for char in text.upper())
+    return encrypted
+
+text = "HELLO"
+shift = 4
+encrypted_text = caesar_cipher(text, shift)
+print(encrypted_text)
+
+
+def affine_encrypt(text, a, b):
+    encrypted_text = ''.join(chr(((a * (ord(char) - ord('a')) + b) % 26) + ord('a')) if char.isalpha() else char for char in text)
+    return encrypted_text
+
+plaintext = "hello"
+a = 5
+b = 7
+encrypted_text = affine_encrypt(plaintext, a, b)
+print(encrypted_text)
+
+
+def monoalphabetic_substitution(text, substitution_key):
+    result = []
+    for char in text:
+        if char.isalpha():
+            shift = 65 if char.isupper() else 97
+            index = ord(char) - shift
+            encrypted_char = substitution_key[index]
+            result.append(encrypted_char)
+        else:
+            result.append(char)
+    return ''.join(result)
+
+def main():
+    substitution_key = "EFGHIJKLMNOPQRSTUVWXYZ"  # Example substitution key
+    text = input("Enter the text: ")
+
+    encrypted_text = monoalphabetic_substitution(text, substitution_key)
+    print("Encrypted text:", encrypted_text)
+
+if __name__ == "__main__":
+    main()￼Enter
